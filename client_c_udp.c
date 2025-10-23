@@ -62,10 +62,10 @@ int main(int argc, char *argv[])
         res[message] = '\0';
 
         // print the message from the server
-        printf("From server: %s", res);
+        printf("From server: %s\n", res);
 
         // check for end conditions
-        if (strcmp(res, "Sorry, cannot compute!\n") == 0)
+        if (strcmp(res, "Sorry, cannot compute!") == 0)
         {
             break;
         }

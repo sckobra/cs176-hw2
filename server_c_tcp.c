@@ -32,7 +32,7 @@ int is_numeric(const char *str) { // check if string is numeric
 int main(int argc, char *argv[]) {
     int sockfd, newsockfd, portno;
     socklen_t clilen;
-    char buffer[129];
+    char buffer[1024];
     struct sockaddr_in serv_addr, cli_addr;
     int n;
 

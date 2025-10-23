@@ -63,15 +63,12 @@ int main(int argc, char *argv[]) {
             error("ERROR on accept");
 
         memset(buffer, 0, sizeof(buffer));
-        int total = 0;
-        while ((n = read(newsockfd, buffer + total, 128 - total)) > 0) {
-            total += n;
-            if (total >= 128) break; // safety guard
-        }
-        if (n < 0) error("ERROR reading from socket");
         
-        buffer[total] = '\0';
-        buffer[strcspn(buffer, "\r\n")] = 0;
+        n = read(newsockfd, buffer, 128);
+        if (n < 0) error("ERROR reading from socket");
+
+        buffer[n] = '\0';
+
         
         if (!is_numeric(buffer)) {
             write(newsockfd, "Sorry, cannot compute!", 22);

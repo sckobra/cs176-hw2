@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
-    char buffer[129]; // max 128 chars 
+    char buffer[1024]; 
 
     if (argc < 3) {
         fprintf(stderr, "Usage: %s <hostname> <port>\n", argv[0]);
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     printf("Enter string: ");
     memset(buffer, 0, sizeof(buffer));
-    fgets(buffer, 128, stdin);
+    fgets(buffer, 1024, stdin);
 
     buffer[strcspn(buffer, "\n")] = 0;     // remove newline
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
         error("ERROR writing to socket");
 
     memset(buffer, 0, sizeof(buffer));
-    while ((n = read(sockfd, buffer, 128)) > 0) {     // read responses until connection closes
+    while ((n = read(sockfd, buffer, 1024)) > 0) {     // read responses until connection closes
         buffer[n] = '\0';
         printf("From server: %s\n", buffer);
         memset(buffer, 0, sizeof(buffer));

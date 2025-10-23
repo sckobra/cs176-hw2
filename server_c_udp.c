@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
         if (sum == -1)
         {
-            const char *error_msg = "Sorry, cannot compute!\n";
+            const char *error_msg = "Sorry, cannot compute!";
             sendto(socketFile, error_msg, strlen(error_msg), 0, (struct sockaddr *)&from, fromlen);
         } else {
             while (1)

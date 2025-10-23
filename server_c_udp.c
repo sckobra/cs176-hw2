@@ -18,7 +18,6 @@ int addDigits(char *string)
         {
             int digit = string[i] - '0';
             sum += digit;
-            printf("summing");
         }
         else
         {
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
         int message = recvfrom(socketFile, buff, sizeof(buff) - 1, 0, (struct sockaddr *)&from, &fromlen);
         buff[message] = '\0';
 
-        printf("DEBUG: received '%s' (len=%d)\n", buff, message);
+        
         for (int i = 0; i < message; i++)
         {
             printf("[%d] = %d ('%c')\n", i, (unsigned char)buff[i], buff[i]);
@@ -87,12 +86,16 @@ int main(int argc, char *argv[])
 
         buff[message] = '\0';
 
-        // remove trailing newline, if present
-        int len = strlen(buff);
+        // Ensure string is null-terminated
+        buff[message] = '\0';
+
+        // Safely remove trailing newline *only if it's actually there*
+        size_t len = strlen(buff);
         if (len > 0 && buff[len - 1] == '\n')
         {
             buff[len - 1] = '\0';
         }
+
         int sum = addDigits(buff);
         char sum_buffer[225];
         snprintf(sum_buffer, sizeof(sum_buffer), "%d", sum);
@@ -100,19 +103,22 @@ int main(int argc, char *argv[])
         if (sum == -1)
         {
             message = sendto(socketFile, "Sorry, cannot compute!\n", 225, 0, (struct sockaddr *)&from, fromlen);
-        }
-        while (1)
-        {
-           
-            snprintf(sum_buffer, sizeof(sum_buffer), "%d", sum);
-            sendto(socketFile, sum_buffer, strlen(sum_buffer), 0,
-                   (struct sockaddr *)&from, fromlen);
+        } else {
+            while (1)
+            {
 
-            if (sum < 10)
-                break;
+                snprintf(sum_buffer, sizeof(sum_buffer), "%d", sum);
+                printf("DEBUG: summing '%s'\n", sum_buffer);
+                sendto(socketFile, sum_buffer, strlen(sum_buffer), 0,
+                       (struct sockaddr *)&from, fromlen);
 
-            sum = addDigits(sum_buffer);
+                if (sum < 10)
+                    break;
+
+                sum = addDigits(sum_buffer);
+            }
         }
+        
     }
     return 0;
 }

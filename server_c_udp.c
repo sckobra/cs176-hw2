@@ -84,11 +84,6 @@ int main(int argc, char *argv[])
             exit(0);
         }
 
-        buff[message] = '\0';
-
-        // Ensure string is null-terminated
-        buff[message] = '\0';
-
         // Safely remove trailing newline *only if it's actually there*
         size_t len = strlen(buff);
         if (len > 0 && buff[len - 1] == '\n')
@@ -97,12 +92,13 @@ int main(int argc, char *argv[])
         }
 
         int sum = addDigits(buff);
-        char sum_buffer[225];
+        char sum_buffer[1024];
         snprintf(sum_buffer, sizeof(sum_buffer), "%d", sum);
 
         if (sum == -1)
         {
-            message = sendto(socketFile, "Sorry, cannot compute!", 25, 0, (struct sockaddr *)&from, fromlen);
+            const char *error_msg = "Sorry, cannot compute!\n";
+            sendto(socketFile, error_msg, strlen(error_msg), 0, (struct sockaddr *)&from, fromlen);
         } else {
             while (1)
             {

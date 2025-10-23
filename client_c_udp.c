@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     // get the port number from the argument vector and make it an integer
     server.sin_port = htons(atoi(argv[2]));
 
-    char user_input[128];
+    char user_input[1024];
 
     // user input
     printf("Enter string: ");
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     sendto(socketFile, user_input, strlen(user_input), 0, (const struct sockaddr *)&server, length);
 
     // server_response
-    char res[255];
+    char res[1024];
     struct sockaddr_in from;
     socklen_t fromlen = sizeof(from);
 

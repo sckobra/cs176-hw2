@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 
     struct sockaddr_in server;
 
-    char buff[1024];
 
     // create the UDP socket: AF_INET for IPv4, Datagram socket, 0 for default protocol
     int socketFile = socket(AF_INET, SOCK_DGRAM, 0);

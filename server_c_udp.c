@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
         if (sum == -1)
         {
-            message = sendto(socketFile, "Sorry, cannot compute!\n", 225, 0, (struct sockaddr *)&from, fromlen);
+            message = sendto(socketFile, "Sorry, cannot compute!\n", 25, 0, (struct sockaddr *)&from, fromlen);
         } else {
             while (1)
             {

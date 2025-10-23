@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         if (n < 0) error("ERROR reading from socket");
 
         buffer[n] = '\0';
-        buffer[strcspn(buffer, "\r\n")] = 0;
+        buffer[strcspn(buffer, "\n")] = 0;
         
         if (!is_numeric(buffer)) {
             write(newsockfd, "Sorry, cannot compute!", 22);
